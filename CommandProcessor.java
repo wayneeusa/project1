@@ -57,8 +57,9 @@ public class CommandProcessor
      */
     public static void doLogout()
     {
-        //TODO -experimental if accepts null **ask about logout
+        //TODO -experimental asked about logout
         CONFIG.setCurrentUser(null);
+        CONFIG.getConsoleOutput().printf(Config.SUCCESSFULLY_LOGGED_OUT);
     }
 
     /**
@@ -118,7 +119,7 @@ public class CommandProcessor
      * messages.
      */
     public static void readMessage(String nickname, boolean enforceUnread) {
-        //TODO  -d prob right   Still must handle "No messages to Display"
+        //TODO  -d prob right    handled "No messages to Display"
 
         //check if nickname null - if so, print everyone's messages
         // to do this, iterate through every user?
@@ -200,7 +201,28 @@ public class CommandProcessor
      */
     public static void search(String word, boolean searchByFirstName)
     {
-        //TODO
+        //TODO  working on this, Used contains as specified
+
+        String word2 = word.toLowerCase();
+        int count = 0;
+
+        List<User> allUsers = Config.getInstance().getAllUsers();
+
+        Iterator<User> thisUserIterator = allUsers.iterator();
+
+        while(thisUserIterator.hasNext()) {
+            User thisUser = thisUserIterator.next();
+            if ((thisUser.getFirstName().toLowerCase().contains( word2 )) || (thisUser.getLastName().
+                    toLowerCase().contains(word2))) {
+
+                CONFIG.getConsoleOutput().printf(thisUser.getFirstName() + " " + thisUser.getLastName());
+                count++;
+
+            }
+        }
+
+        CONFIG.getConsoleOutput(Config.NO_RESULTS_FOUND);
+
     }
 
     /**
@@ -213,8 +235,8 @@ public class CommandProcessor
      */
     public static void addFriend(String nickname) throws WhatsAppException
     {
-        //TODO
-
+        //TODO  -d
+        CONFIG.getCurrentUser().addFriend(nickname);
 
     }
 
@@ -228,6 +250,7 @@ public class CommandProcessor
      * method of the User class
      */
     public static void removeFriend(String nickname) throws WhatsAppException
+    //TODO  method in User class as stated
     {
         CONFIG.getCurrentUser().removeFriend(nickname);
         CONFIG.getConsoleOutput().printf(Config.SUCCESSFULLY_REMOVED);

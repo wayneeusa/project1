@@ -210,7 +210,24 @@ public class User
      */
     public void removeBroadcastList(String broadcastNickname) throws WhatsAppException
     {
-        //TODO
+        //TODO  want to ask TA about this exp .remove(thisList)
+
+        if(!isBroadcastList(broadcastNickname)){
+            throw new WhatsAppException(Config.BCAST_LIST_DOES_NOT_EXIST);
+        } else {
+
+            Iterator<BroadcastList> blistIterator = this.broadcastLists.iterator();
+
+            while (blistIterator.hasNext()) {
+                BroadcastList thisList = blistIterator.next();
+
+                if (thisList.getNickname().equals( broadcastNickname)) {
+                    blistIterator.remove();
+                }
+            }
+
+        }
+
     }
 
     /**
@@ -272,12 +289,12 @@ public class User
      */
     public boolean isExistingNickname(String nickname)
     {
-        //TODO  Do this close to NEXT
+        //TODO  -d
 
-        if((isFriend(nickname) || (isBroadcastList(nickname))){
+        if((isFriend(nickname) || (isBroadcastList(nickname)))){
         return true;
     }
-        
+
         return false;
     }
 
