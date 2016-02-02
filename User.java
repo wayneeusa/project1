@@ -223,7 +223,18 @@ public class User
      */
     public boolean isFriend(String nickname)
     {
-        //TODO
+        //TODO   -d
+
+        Iterator<User> friendsIterator = this.friends.iterator();
+
+        while (friendsIterator.hasNext()) {
+            User friend = friendsIterator.next();
+            if (friend.getNickname().equals(nickname)){
+                return true;
+            }
+        }
+
+
         return false;
     }
 
@@ -235,9 +246,19 @@ public class User
      * broadcast list of this user object
      * @return true if nickname is a broadcast list of this user object
      */
-    public boolean isBroadcastList(String nickname)
-    {
-        //TODO
+    public boolean isBroadcastList(String nickname) {
+        //TODO  -d
+
+
+        Iterator<BroadcastList> blistIterator = this.broadcastLists.iterator();
+
+        while (blistIterator.hasNext()) {
+            BroadcastList thisList = blistIterator.next();
+
+            if (thisList.getNickname().equals( nickname)) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -251,7 +272,12 @@ public class User
      */
     public boolean isExistingNickname(String nickname)
     {
-        //TODO
+        //TODO  Do this close to NEXT
+
+        if((isFriend(nickname) || (isBroadcastList(nickname))){
+        return true;
+    }
+        
         return false;
     }
 
@@ -296,7 +322,7 @@ public class User
      */
     public void addFriend(String nickname) throws WhatsAppException
     {
-        //TODO   working on this, could it possibly work?
+        //TODO   working on this, might possibly work?
 
 
 
@@ -304,10 +330,11 @@ public class User
             throw new WhatsAppException(Config.ALREADY_A_FRIEND);
         } else if(nickname.equals(Config.getInstance().getCurrentUser().getNickname())) {
             throw new WhatsAppException((Config.CANT_BE_OWN_FRIEND));
-        } else if(!Helper.isExistingGlobalContact()) {
+        } else if(!Helper.isExistingGlobalContact(nickname)) {
             throw new WhatsAppException(Config.CANT_LOCATE);
         } else {
-            Config.getInstance().getCurrentUser().getFriends().add(Helper.getUserFromNickname(nickname));
+            Config.getInstance().getCurrentUser().getFriends().add(Helper.getUserFromNickname(Config.getInstance().
+                    getAllUsers(),nickname));
         }
 
 

@@ -110,7 +110,7 @@ public class Message
      */
     public void setToNickname(String toNickname)
     {
-        //TODO
+        //TODO   -d
         this.toNickname = toNickname;
     }
 
@@ -121,7 +121,7 @@ public class Message
      */
     public String getBroadcastNickname()
     {
-        //TODO
+        //TODO  -d
         return broadcastNickname;
     }
 
@@ -132,7 +132,7 @@ public class Message
      */
     public void setBroadcastNickname(String broadcastNickname)
     {
-        //TODO
+        //TODO  -d
         this.broadcastNickname = broadcastNickname;
     }
 
@@ -144,7 +144,7 @@ public class Message
      */
     public Date getSentTime()
     {
-        //TODO
+        //TODO   -d
         return this.sentTime;
     }
 
@@ -156,7 +156,7 @@ public class Message
      */
     public void setSentTime(Date sentTime)
     {
-        //TODO
+        //TODO   -d
         this.sentTime = sentTime;
     }
 
@@ -167,7 +167,7 @@ public class Message
      */
     public String getMessage()
     {
-        //TODO
+        //TODO  -d
         return message;
     }
 
@@ -178,7 +178,7 @@ public class Message
      */
     public void setMessage(String message)
     {
-        //TODO
+        //TODO    -d
         this.message = message;
     }
 
@@ -190,7 +190,7 @@ public class Message
      */
     public boolean isRead()
     {
-        //TODO
+        //TODO  -d
         return read;
     }
 
@@ -202,7 +202,7 @@ public class Message
      */
     public void setRead(boolean read)
     {
-        //TODO
+        //TODO  -d
         this.read = read;
     }
 

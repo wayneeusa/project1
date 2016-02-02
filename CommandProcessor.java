@@ -4,6 +4,7 @@
 
 import java.util.Date;
 import java.util.Iterator;
+import java.util.*;
 
 /**
  * The most important class. This processes all the commands issued by the users
@@ -56,7 +57,8 @@ public class CommandProcessor
      */
     public static void doLogout()
     {
-        //TODO
+        //TODO -experimental if accepts null **ask about logout
+        CONFIG.setCurrentUser(null);
     }
 
     /**
@@ -72,8 +74,38 @@ public class CommandProcessor
      */
     public static void sendMessage(String nickname, String message) throws WhatsAppRuntimeException, WhatsAppException
     {
-        //TODO
+        //TODO  working on this, check Timestamp, check where messages go .. same message to both lists?
+
+        if( CONFIG.getCurrentUser().getNickname().equals(nickname)) {
+        throw new WhatsAppException(Config.CANT_SEND_YOURSELF);
     }
+        if(CONFIG.getCurrentUser().isExistingNickname(nickname)){
+
+        if(CONFIG.getCurrentUser().isFriend(nickname)) {
+            Helper.getUserFromNickname(CONFIG.getAllUsers() ,nickname).getMessages().add(new Message(CONFIG.getCurrentUser().getNickname(), nickname,
+            null, new java.util.Date(), message, false ));
+            CONFIG.getCurrentUser().getMessages().add( new Message(CONFIG.getCurrentUser().getNickname(), nickname,
+                    null, new java.util.Date(), message, false ));
+        } else //if(Helper.getBroadcastListFromNickname(CONFIG.getCurrentUser( nickname).getNickname().equals(nickname)))
+        {
+
+            List<String> listOfMembers = Helper.getBroadcastListFromNickname(CONFIG.getCurrentUser().getBroadcastLists()
+                    , nickname).getMembers();
+
+            Iterator<String> membersIterator = listOfMembers.iterator();
+
+            while (membersIterator.hasNext()) {
+                String nick = membersIterator.next();
+
+                    Helper.getUserFromNickname(CONFIG.getAllUsers(), nick).getMessages().add(new Message(CONFIG.getCurrentUser().getNickname(),
+                            nick, nickname, new java.util.Date(), message, false));
+                }
+            }
+
+        }
+
+    }
+
 
     /**
      * Displays messages from the message list of the user logged in. Prints the
@@ -85,9 +117,75 @@ public class CommandProcessor
      * @param enforceUnread - send true if you want to display only unread
      * messages.
      */
-    public static void readMessage(String nickname, boolean enforceUnread)
-    {
-        //TODO
+    public static void readMessage(String nickname, boolean enforceUnread) {
+        //TODO  -d prob right   Still must handle "No messages to Display"
+
+        //check if nickname null - if so, print everyone's messages
+        // to do this, iterate through every user?
+        int counter = 0;
+
+        List<Message> messages = CONFIG.getCurrentUser().getMessages();
+
+        if (enforceUnread == true) {
+
+            Iterator<Message> messageIterator = messages.iterator();
+            while (messageIterator.hasNext()) {
+                Message thisMessage = messageIterator.next();
+                if (thisMessage.isRead() == false) {
+
+                    if (nickname == null) {
+
+                        CONFIG.getConsoleOutput().printf(Config.MESSAGE_FORMAT, thisMessage.getFromNickname(),
+                                thisMessage.getToNickname(), thisMessage.getMessage(), thisMessage.getSentTime());
+                        thisMessage.setRead(true);
+                        counter++;
+                    } else {
+                        if((thisMessage.getFromNickname().equals(nickname)) || (thisMessage.getToNickname().equals(nickname))
+                                || (thisMessage.getBroadcastNickname().equals(nickname))){
+
+                            CONFIG.getConsoleOutput().printf(Config.MESSAGE_FORMAT, thisMessage.getFromNickname(),
+                                    thisMessage.getToNickname(), thisMessage.getMessage(), thisMessage.getSentTime());
+                            thisMessage.setRead(true);
+                            counter++;
+                        }
+                    }
+                }
+
+            }
+
+
+        } else if(enforceUnread == false){
+
+            Iterator<Message> messageIterator = messages.iterator();
+            while (messageIterator.hasNext())
+            {
+                Message thisMessage = messageIterator.next();
+
+                if (nickname == null) {
+
+                    CONFIG.getConsoleOutput().printf(Config.MESSAGE_FORMAT, thisMessage.getFromNickname(),
+                            thisMessage.getToNickname(), thisMessage.getMessage(), thisMessage.getSentTime());
+                    thisMessage.setRead(true);
+                    counter++;
+                } else {
+                    if((thisMessage.getFromNickname().equals(nickname)) || (thisMessage.getToNickname().equals(nickname))
+                            || (thisMessage.getBroadcastNickname().equals(nickname))){
+
+                        CONFIG.getConsoleOutput().printf(Config.MESSAGE_FORMAT, thisMessage.getFromNickname(),
+                                thisMessage.getToNickname(), thisMessage.getMessage(), thisMessage.getSentTime());
+                        thisMessage.setRead(true);
+                        counter++;
+                    }
+                }
+
+            }
+
+
+        }
+            if(counter == 0){
+                CONFIG.getConsoleOutput().printf(Config.NO_MESSAGES);
+            }
+
     }
 
     /**
@@ -168,8 +266,7 @@ public class CommandProcessor
         {
             throw new WhatsAppException(Config.ALREADY_PRESENT);
         }
-        Helper.
-                getBroadcastListFromNickname(CONFIG.getCurrentUser().
+        Helper.getBroadcastListFromNickname(CONFIG.getCurrentUser().
                         getBroadcastLists(), bcastNickname).getMembers().
                 add(friendNickname);
         CONFIG.getConsoleOutput().printf(Config.SUCCESSFULLY_ADDED);
