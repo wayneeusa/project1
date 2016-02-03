@@ -221,7 +221,7 @@ public class CommandProcessor
             }
         }
 
-        CONFIG.getConsoleOutput(Config.NO_RESULTS_FOUND);
+        CONFIG.getConsoleOutput().printf(Config.NO_RESULTS_FOUND);
 
     }
 
@@ -308,9 +308,38 @@ public class CommandProcessor
      * NOT_PART_OF_BCAST_LIST (if the friend is not a part of the list)
      */
     public static void removeFriendFromBcast(String friendNickname,
-                                             String bcastNickname) throws WhatsAppException
-    {
-        //TODO
+                                             String bcastNickname) throws WhatsAppException {
+        //TODO  throw exception here?
+        boolean friendWasRemoved = false;
+
+        if (!CONFIG.getCurrentUser().isFriend(friendNickname)) {
+
+            if (CONFIG.getCurrentUser().isBroadcastList(bcastNickname)) {
+
+
+                BroadcastList currentList = Helper.getBroadcastListFromNickname(CONFIG.getCurrentUser().getBroadcastLists(),
+                        bcastNickname);
+
+                Iterator<String> currentListIterator = currentList.getMembers().iterator();
+                while (currentListIterator.hasNext()) {
+                    String friend = currentListIterator.next();
+
+                    if (friend.equals(friendNickname)) {
+                        currentListIterator.remove();
+                        friendWasRemoved = true;
+                    }
+                }
+                if (!friendWasRemoved) {
+                    throw new WhatsAppException(CONFIG.NOT_PART_OF_BCAST_LIST);
+                }
+
+            } else {
+
+                throw new WhatsAppException(CONFIG.BCAST_LIST_DOES_NOT_EXIST);
+
+            }
+
+        } else {throw new WhatsAppException(CONFIG.NOT_A_FRIEND);}
     }
 
     /**
