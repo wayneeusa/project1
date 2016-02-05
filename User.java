@@ -348,7 +348,7 @@ public class User
         } else if(nickname.equals(Config.getInstance().getCurrentUser().getNickname())) {
             throw new WhatsAppException((Config.CANT_BE_OWN_FRIEND));
         } else if(!Helper.isExistingGlobalContact(nickname)) {
-            throw new WhatsAppException(Config.CANT_LOCATE);
+            throw new WhatsAppException("Can't locate " + nickname + "\n");
         } else {
             Config.getInstance().getCurrentUser().getFriends().add(Helper.getUserFromNickname(Config.getInstance().
                     getAllUsers(),nickname));

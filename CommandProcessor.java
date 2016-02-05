@@ -5,6 +5,7 @@
 import java.util.Date;
 import java.util.Iterator;
 import java.util.*;
+import java.util.concurrent.Callable;
 
 /**
  * The most important class. This processes all the commands issued by the users
@@ -140,26 +141,30 @@ public class CommandProcessor
                                 thisMessage.getToNickname(), thisMessage.getMessage(), thisMessage.getSentTime());
                         thisMessage.setRead(true);
                         counter++;
-                    } else {
-                        if((thisMessage.getFromNickname().equals(nickname)) || (thisMessage.getToNickname().equals(nickname))
-                                || (thisMessage.getBroadcastNickname().equals(nickname))){
+                    } else if ((thisMessage.getFromNickname().equals(nickname)) ||
+                            (thisMessage.getToNickname().equals(nickname))) {
+
+                        CONFIG.getConsoleOutput().printf(Config.MESSAGE_FORMAT, thisMessage.getFromNickname(),
+                                thisMessage.getToNickname(), thisMessage.getMessage(), thisMessage.getSentTime());
+                        thisMessage.setRead(true);
+                        counter++;
+                    } else if ((thisMessage.getBroadcastNickname() != null) && (nickname != null)) {
+                        if (thisMessage.getBroadcastNickname().equals(nickname)) {
 
                             CONFIG.getConsoleOutput().printf(Config.MESSAGE_FORMAT, thisMessage.getFromNickname(),
                                     thisMessage.getToNickname(), thisMessage.getMessage(), thisMessage.getSentTime());
-                            thisMessage.setRead(true);
-                            counter++;
                         }
+
                     }
                 }
 
             }
 
 
-        } else if(enforceUnread == false){
+        } else if (enforceUnread == false) {
 
             Iterator<Message> messageIterator = messages.iterator();
-            while (messageIterator.hasNext())
-            {
+            while (messageIterator.hasNext()) {
                 Message thisMessage = messageIterator.next();
 
                 if (nickname == null) {
@@ -168,25 +173,29 @@ public class CommandProcessor
                             thisMessage.getToNickname(), thisMessage.getMessage(), thisMessage.getSentTime());
                     thisMessage.setRead(true);
                     counter++;
-                } else {
-                    if((thisMessage.getFromNickname().equals(nickname)) || (thisMessage.getToNickname().equals(nickname))
-                            || (thisMessage.getBroadcastNickname().equals(nickname))){
+                } else if ((thisMessage.getFromNickname().equals(nickname)) ||
+                        (thisMessage.getToNickname().equals(nickname))) {
+
+                    CONFIG.getConsoleOutput().printf(Config.MESSAGE_FORMAT, thisMessage.getFromNickname(),
+                            thisMessage.getToNickname(), thisMessage.getMessage(), thisMessage.getSentTime());
+                    thisMessage.setRead(true);
+                    counter++;
+                } else if ((thisMessage.getBroadcastNickname() != null) && (nickname != null)) {
+                    if (thisMessage.getBroadcastNickname().equals(nickname)) {
 
                         CONFIG.getConsoleOutput().printf(Config.MESSAGE_FORMAT, thisMessage.getFromNickname(),
                                 thisMessage.getToNickname(), thisMessage.getMessage(), thisMessage.getSentTime());
-                        thisMessage.setRead(true);
-                        counter++;
                     }
+
                 }
 
+
             }
-
-
-        }
-            if(counter == 0){
+            if (counter == 0) {
                 CONFIG.getConsoleOutput().printf(Config.NO_MESSAGES);
             }
 
+        }
     }
 
     /**
@@ -201,7 +210,7 @@ public class CommandProcessor
      */
     public static void search(String word, boolean searchByFirstName)
     {
-        //TODO  working on this, Used contains as specified
+        //TODO  should be done, Used contains as specified
 
         String word2 = word.toLowerCase();
         int count = 0;
@@ -212,17 +221,41 @@ public class CommandProcessor
 
         while(thisUserIterator.hasNext()) {
             User thisUser = thisUserIterator.next();
-            if ((thisUser.getFirstName().toLowerCase().contains( word2 )) || (thisUser.getLastName().
-                    toLowerCase().contains(word2))) {
+            if(searchByFirstName == true) {
+            if ((thisUser.getFirstName().toLowerCase().contains( word2 ))) {
 
-                CONFIG.getConsoleOutput().printf(thisUser.getFirstName() + " " + thisUser.getLastName());
+                String isFriend;
+
+                if(CONFIG.getCurrentUser().
+                        isFriend(thisUser.getNickname())){  isFriend = "yes"; }
+                else { isFriend = "no";}
+
+
+                CONFIG.getConsoleOutput().printf(Config.USER_DISPLAY_FOR_SEARCH, thisUser.getLastName(),
+                        thisUser.getFirstName(), thisUser.getNickname(), isFriend );
+
                 count++;
+            }
+            } else if(searchByFirstName == false) {
+                if ((thisUser.getLastName().
+                        toLowerCase().contains(word2))) {
 
+                    String isFriend;
+
+                    if(CONFIG.getCurrentUser().
+                            isFriend(thisUser.getNickname())){  isFriend = "yes"; }
+                    else { isFriend = "no";}
+
+                    CONFIG.getConsoleOutput().printf(Config.USER_DISPLAY_FOR_SEARCH, thisUser.getLastName(),
+                            thisUser.getFirstName(), thisUser.getNickname(), isFriend );
+
+                    count++;
+                }
             }
         }
-
-        CONFIG.getConsoleOutput().printf(Config.NO_RESULTS_FOUND);
-
+        if(count == 0) {
+            CONFIG.getConsoleOutput().printf(Config.NO_RESULTS_FOUND + "\n");
+        }
     }
 
     /**
@@ -354,8 +387,18 @@ public class CommandProcessor
      */
     public static void removeBroadcastcast(String nickname) throws WhatsAppException
     {
-        //TODO
-    }
+        //   -d
+
+        if(CONFIG.getCurrentUser().isBroadcastList(nickname)) {
+
+           CONFIG.getCurrentUser().removeBroadcastList(nickname);
+            CONFIG.getConsoleOutput().printf(Config.SUCCESSFULLY_REMOVED);
+
+                } else { CONFIG.getConsoleOutput().printf(Config.BCAST_LIST_DOES_NOT_EXIST);
+            }
+        }
+
+
 
     /**
      * Processes commands issued by the logged in user. Says INVALID_COMMAND for
