@@ -107,7 +107,7 @@ public class CommandProcessor
 
                 }
             }
-           if(somethingSent){ CONFIG.getConsoleOutput().printf(Config.MESSAGE_SENT_SUCCESSFULLY);}
+           if(somethingSent){ CONFIG.getConsoleOutput().printf(Config.MESSAGE_SENT_SUCCESSFULLY);} //fixed prob
 
         } else {
 
