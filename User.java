@@ -352,6 +352,7 @@ public class User
         } else {
             Config.getInstance().getCurrentUser().getFriends().add(Helper.getUserFromNickname(Config.getInstance().
                     getAllUsers(),nickname));
+            Config.getInstance().getConsoleOutput().printf(Config.SUCCESSFULLY_ADDED);
         }
 
 

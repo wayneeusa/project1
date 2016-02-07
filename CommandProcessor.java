@@ -74,40 +74,47 @@ public class CommandProcessor
      * @throws WhatsAppException throw this with one of CANT_SEND_YOURSELF,
      * NICKNAME_DOES_NOT_EXIST messages
      */
-    public static void sendMessage(String nickname, String message) throws WhatsAppRuntimeException, WhatsAppException
-    {
-        //TODO  working on this, check Timestamp, check where messages go .. same message to both lists?
+    public static void sendMessage(String nickname, String message) throws WhatsAppRuntimeException, WhatsAppException {
+        //TODO  working on this, check where messages go .. same message to both lists?
 
-        if( CONFIG.getCurrentUser().getNickname().equals(nickname)) {
-        throw new WhatsAppException(Config.CANT_SEND_YOURSELF);
-    }
-        if(CONFIG.getCurrentUser().isExistingNickname(nickname)){
+        boolean somethingSent = false;
+        if (CONFIG.getCurrentUser().getNickname().equals(nickname)) {
+            throw new WhatsAppException(Config.CANT_SEND_YOURSELF);
+        }
+        if (CONFIG.getCurrentUser().isExistingNickname(nickname)) {
 
-        if(CONFIG.getCurrentUser().isFriend(nickname)) {
-            Helper.getUserFromNickname(CONFIG.getAllUsers() ,nickname).getMessages().add(new Message(CONFIG.getCurrentUser().getNickname(), nickname,
-            null, new java.util.Date(), message, false ));
-            CONFIG.getCurrentUser().getMessages().add( new Message(CONFIG.getCurrentUser().getNickname(), nickname,
-                    null, new java.util.Date(), message, false ));
-        } else //if(Helper.getBroadcastListFromNickname(CONFIG.getCurrentUser( nickname).getNickname().equals(nickname)))
-        {
+            if (CONFIG.getCurrentUser().isFriend(nickname)) {
+                Helper.getUserFromNickname(CONFIG.getAllUsers(), nickname).getMessages().add(new Message(CONFIG.getCurrentUser().getNickname(), nickname,
+                        null, new java.util.Date(), message, false));
+                CONFIG.getCurrentUser().getMessages().add(new Message(CONFIG.getCurrentUser().getNickname(), nickname,
+                        null, new java.util.Date(), message, false));
+                somethingSent = true;
+               // CONFIG.getConsoleOutput().printf(Config.MESSAGE_SENT_SUCCESSFULLY);
+            } else //if(Helper.getBroadcastListFromNickname(CONFIG.getCurrentUser( nickname).getNickname().equals(nickname)))
+            {
 
-            List<String> listOfMembers = Helper.getBroadcastListFromNickname(CONFIG.getCurrentUser().getBroadcastLists()
-                    , nickname).getMembers();
+                List<String> listOfMembers = Helper.getBroadcastListFromNickname(CONFIG.getCurrentUser().getBroadcastLists()
+                        , nickname).getMembers();
 
-            Iterator<String> membersIterator = listOfMembers.iterator();
+                Iterator<String> membersIterator = listOfMembers.iterator();
 
-            while (membersIterator.hasNext()) {
-                String nick = membersIterator.next();
+                while (membersIterator.hasNext()) {
+                    String nick = membersIterator.next();
 
                     Helper.getUserFromNickname(CONFIG.getAllUsers(), nick).getMessages().add(new Message(CONFIG.getCurrentUser().getNickname(),
                             nick, nickname, new java.util.Date(), message, false));
+                    somethingSent = true;
+
                 }
             }
+           if(somethingSent){ CONFIG.getConsoleOutput().printf(Config.MESSAGE_SENT_SUCCESSFULLY);}
+
+        } else {
+
+            Config.getInstance().getConsoleOutput().printf(Config.NICKNAME_DOES_NOT_EXIST,nickname);
 
         }
-
     }
-
 
     /**
      * Displays messages from the message list of the user logged in. Prints the
@@ -191,10 +198,12 @@ public class CommandProcessor
 
 
             }
-            if (counter == 0) {
-                CONFIG.getConsoleOutput().printf(Config.NO_MESSAGES);
-            }
 
+        }
+
+
+        if (counter == 0) {
+            CONFIG.getConsoleOutput().printf(Config.NO_MESSAGES);
         }
     }
 
