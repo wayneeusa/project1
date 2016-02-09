@@ -75,9 +75,10 @@ public class CommandProcessor
      * NICKNAME_DOES_NOT_EXIST messages
      */
     public static void sendMessage(String nickname, String message) throws WhatsAppRuntimeException, WhatsAppException {
-        //TODO  working on this, check where messages go .. same message to both lists?
+        //TODO  working on this,
 
         boolean somethingSent = false;
+        boolean bcastMessage = false;
         if (CONFIG.getCurrentUser().getNickname().equals(nickname)) {
             throw new WhatsAppException(Config.CANT_SEND_YOURSELF);
         }
@@ -103,11 +104,21 @@ public class CommandProcessor
 
                     Helper.getUserFromNickname(CONFIG.getAllUsers(), nick).getMessages().add(new Message(CONFIG.getCurrentUser().getNickname(),
                             nick, nickname, new java.util.Date(), message, false));
+
+
+
+                    bcastMessage = true;
                     somethingSent = true;
+
+
 
                 }
             }
            if(somethingSent){ CONFIG.getConsoleOutput().printf(Config.MESSAGE_SENT_SUCCESSFULLY);} //fixed prob
+            if(bcastMessage) {
+                CONFIG.getCurrentUser().getMessages().add( new Message(CONFIG.getCurrentUser().getNickname(),
+                        nickname, nickname, new java.util.Date(), message, false) );
+            }
 
         } else {
 
@@ -142,12 +153,31 @@ public class CommandProcessor
                 Message thisMessage = messageIterator.next();
                 if (thisMessage.isRead() == false) {
 
-                    if (nickname == null) {
+
+                 if ((thisMessage.getBroadcastNickname() != null) && (nickname == null) ) {
+
+                    if((thisMessage.getFromNickname().equals( CONFIG.getCurrentUser().getNickname()))) {
+                        CONFIG.getConsoleOutput().printf(Config.MESSAGE_FORMAT, thisMessage.getFromNickname(),
+                                thisMessage.getBroadcastNickname(), thisMessage.getMessage(), thisMessage.getSentTime());
+                        thisMessage.setRead(true);
+                        counter++;
+                    } else {
 
                         CONFIG.getConsoleOutput().printf(Config.MESSAGE_FORMAT, thisMessage.getFromNickname(),
                                 thisMessage.getToNickname(), thisMessage.getMessage(), thisMessage.getSentTime());
                         thisMessage.setRead(true);
                         counter++;
+
+                    }
+                 }
+
+                    else if (nickname == null) {
+
+                        CONFIG.getConsoleOutput().printf(Config.MESSAGE_FORMAT, thisMessage.getFromNickname(),
+                                thisMessage.getToNickname(), thisMessage.getMessage(), thisMessage.getSentTime());
+                        thisMessage.setRead(true);
+                        counter++;
+
                     } else if ((thisMessage.getFromNickname().equals(nickname)) ||
                             (thisMessage.getToNickname().equals(nickname))) {
 
@@ -155,11 +185,14 @@ public class CommandProcessor
                                 thisMessage.getToNickname(), thisMessage.getMessage(), thisMessage.getSentTime());
                         thisMessage.setRead(true);
                         counter++;
+
                     } else if ((thisMessage.getBroadcastNickname() != null) && (nickname != null)) {
                         if (thisMessage.getBroadcastNickname().equals(nickname)) {
 
                             CONFIG.getConsoleOutput().printf(Config.MESSAGE_FORMAT, thisMessage.getFromNickname(),
-                                    thisMessage.getToNickname(), thisMessage.getMessage(), thisMessage.getSentTime());
+                                    thisMessage.getBroadcastNickname(), thisMessage.getMessage(), thisMessage.getSentTime());
+                            thisMessage.setRead(true);
+                            counter++;
                         }
 
                     }
@@ -174,7 +207,28 @@ public class CommandProcessor
             while (messageIterator.hasNext()) {
                 Message thisMessage = messageIterator.next();
 
-                if (nickname == null) {
+
+                if ((thisMessage.getBroadcastNickname() != null) && nickname == null ) {
+
+
+                    if((thisMessage.getFromNickname().equals( CONFIG.getCurrentUser().getNickname()))) {
+                        CONFIG.getConsoleOutput().printf(Config.MESSAGE_FORMAT, thisMessage.getFromNickname(),
+                                thisMessage.getBroadcastNickname(), thisMessage.getMessage(), thisMessage.getSentTime());
+                        thisMessage.setRead(true);
+                        counter++;
+                    } else {
+
+                        CONFIG.getConsoleOutput().printf(Config.MESSAGE_FORMAT, thisMessage.getFromNickname(),
+                                thisMessage.getToNickname(), thisMessage.getMessage(), thisMessage.getSentTime());
+                        thisMessage.setRead(true);
+                        counter++;
+
+                    }
+
+                }
+
+
+                 else if (nickname == null) {
 
                     CONFIG.getConsoleOutput().printf(Config.MESSAGE_FORMAT, thisMessage.getFromNickname(),
                             thisMessage.getToNickname(), thisMessage.getMessage(), thisMessage.getSentTime());
@@ -192,6 +246,8 @@ public class CommandProcessor
 
                         CONFIG.getConsoleOutput().printf(Config.MESSAGE_FORMAT, thisMessage.getFromNickname(),
                                 thisMessage.getToNickname(), thisMessage.getMessage(), thisMessage.getSentTime());
+                        thisMessage.setRead(true);
+                        counter++;
                     }
 
                 }
