@@ -90,8 +90,8 @@ public class CommandProcessor
                 CONFIG.getCurrentUser().getMessages().add(new Message(CONFIG.getCurrentUser().getNickname(), nickname,
                         null, new java.util.Date(), message, false));
                 somethingSent = true;
-               // CONFIG.getConsoleOutput().printf(Config.MESSAGE_SENT_SUCCESSFULLY);
-            } else //if(Helper.getBroadcastListFromNickname(CONFIG.getCurrentUser( nickname).getNickname().equals(nickname)))
+
+            } else
             {
 
                 List<String> listOfMembers = Helper.getBroadcastListFromNickname(CONFIG.getCurrentUser().getBroadcastLists()
@@ -156,19 +156,24 @@ public class CommandProcessor
 
                  if ((thisMessage.getBroadcastNickname() != null) && (nickname == null) ) {
 
-                    if((thisMessage.getFromNickname().equals( CONFIG.getCurrentUser().getNickname()))) {
-                        CONFIG.getConsoleOutput().printf(Config.MESSAGE_FORMAT, thisMessage.getFromNickname(),
-                                thisMessage.getBroadcastNickname(), thisMessage.getMessage(), thisMessage.getSentTime());
-                        thisMessage.setRead(true);
-                        counter++;
-                    } else {
+                     if((thisMessage.getFromNickname().equals( CONFIG.getCurrentUser().getNickname())))  {
+                         CONFIG.getConsoleOutput().printf(Config.MESSAGE_FORMAT, thisMessage.getFromNickname(),
+                                 thisMessage.getBroadcastNickname(), thisMessage.getMessage(), thisMessage.getSentTime());
+                         thisMessage.setRead(true);
+                         counter++;
+                     } else if ( thisMessage.getToNickname().equals(CONFIG.getCurrentUser().getNickname())) {
+                         CONFIG.getConsoleOutput().printf(Config.MESSAGE_FORMAT, thisMessage.getFromNickname(),
+                                 thisMessage.getToNickname(), thisMessage.getMessage(), thisMessage.getSentTime());
+                         thisMessage.setRead(true);
+                         counter++;
+                     } else {
 
-                        CONFIG.getConsoleOutput().printf(Config.MESSAGE_FORMAT, thisMessage.getFromNickname(),
-                                thisMessage.getToNickname(), thisMessage.getMessage(), thisMessage.getSentTime());
-                        thisMessage.setRead(true);
-                        counter++;
+                         CONFIG.getConsoleOutput().printf(Config.MESSAGE_FORMAT, thisMessage.getFromNickname(),
+                                 thisMessage.getToNickname(), thisMessage.getMessage(), thisMessage.getSentTime());
+                         thisMessage.setRead(true);
+                         counter++;
 
-                    }
+                     }
                  }
 
                     else if (nickname == null) {
@@ -211,9 +216,14 @@ public class CommandProcessor
                 if ((thisMessage.getBroadcastNickname() != null) && nickname == null ) {
 
 
-                    if((thisMessage.getFromNickname().equals( CONFIG.getCurrentUser().getNickname()))) {
+                    if((thisMessage.getFromNickname().equals( CONFIG.getCurrentUser().getNickname())))  {
                         CONFIG.getConsoleOutput().printf(Config.MESSAGE_FORMAT, thisMessage.getFromNickname(),
                                 thisMessage.getBroadcastNickname(), thisMessage.getMessage(), thisMessage.getSentTime());
+                        thisMessage.setRead(true);
+                        counter++;
+                    } else if ( thisMessage.getToNickname().equals(CONFIG.getCurrentUser().getNickname())) {
+                        CONFIG.getConsoleOutput().printf(Config.MESSAGE_FORMAT, thisMessage.getFromNickname(),
+                                thisMessage.getToNickname(), thisMessage.getMessage(), thisMessage.getSentTime());
                         thisMessage.setRead(true);
                         counter++;
                     } else {
@@ -224,9 +234,7 @@ public class CommandProcessor
                         counter++;
 
                     }
-
                 }
-
 
                  else if (nickname == null) {
 
