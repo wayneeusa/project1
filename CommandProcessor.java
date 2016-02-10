@@ -498,7 +498,7 @@ public class CommandProcessor
                                     indexOf(",")).trim();
                     String message = command.
                             substring(command.indexOf("\"") + 1, command.trim().
-                                    length());
+                                    length()-1);    //Corrected from TA corretions added -1 and subtracted )
                     sendMessage(nickname, message);
                     break;
                 case "read messages unread from":
@@ -568,7 +568,7 @@ public class CommandProcessor
                 case "remove bcast":
                     nickname = command.
                             substring(command.indexOf(":") + 1, command.trim().
-                                    length());
+                                    length()).trim();
                     removeBroadcastcast(nickname);
                     break;
                 default:

@@ -319,8 +319,6 @@ public class User
 
             if (memberNick.equals(nickname)) {
                 return true;
-            } else {
-                return false;
             }
         }
         return false;
@@ -382,7 +380,7 @@ public class User
         {
             BroadcastList bcastList = bcastIterator.next();
 
-            if (!isMemberOfBroadcastList(nickname, bcastList.getNickname()))
+            if (isMemberOfBroadcastList(nickname, bcastList.getNickname()))
             {
                 Helper.getBroadcastListFromNickname(broadcastLists, bcastList.
                         getNickname()).
