@@ -1,6 +1,17 @@
-/**
- * Created by wayne on 1/27/16.
- */
+///////////////////////////////////////////////////////////////////////////////
+//                   ALL STUDENTS COMPLETE THESE SECTIONS
+// Title:            WHATSAPP
+// Files:            BroadcastList.java, CommandProcessor.java, Helper.java,
+//                   Message.java, User.java
+// Semester:         367 Spring 2016
+//
+// Author:           WAYNE ETERNICKA
+// Email:            eternicka@wisc.edu
+// CS Login:         eternicka
+// Lecturer's Name:  Deb Deppeler
+// Lab Section:      N/A
+////////////////////////////////////////////////////////////////////////////////
+
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;

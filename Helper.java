@@ -1,6 +1,15 @@
-/**
- * Created by wayne on 1/27/16.
- */
+///////////////////////////////////////////////////////////////////////////////
+//                   ALL STUDENTS COMPLETE THESE SECTIONS
+// Main Class File:  WHATSAPP
+// File:             Helper.java
+// Semester:         367 Spring 2016
+//
+// Author:           Wayne Eternicka  eternicka@wisc.edu
+// CS Login:         eternicka
+// Lecturer's Name:  Deb Deppeler
+// Lab Section:      N/A
+//
+//////////////////////////////////////////////////////////////////////////////
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -33,7 +42,7 @@ public class Helper
      */
     public static User getUserFromNickname(List<User> users, String nickname)
     {
-        //TODO  Finished, but didn't check if working
+        //TODO  FINISHED
 
         Iterator<User> userListIterator = users.iterator();
 
@@ -70,7 +79,7 @@ public class Helper
      */
     public static BroadcastList getBroadcastListFromNickname(
             List<BroadcastList> lists, String nickname) {
-        //TODO  fixed with Iterator, didn't check yet
+        //TODO  FINISHED
         List<BroadcastList> broadcastlists = lists;
 
         Iterator<BroadcastList> bcastIterator = broadcastlists.iterator();
@@ -100,7 +109,7 @@ public class Helper
      */
     public static boolean isExistingGlobalContact(String nickname)
     {
-        //TODO  Finished, but didn't check
+        //TODO  FINISHED
 
         List<User> allUsers = Config.getInstance().getAllUsers();
 

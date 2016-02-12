@@ -1,6 +1,15 @@
-/**
- * Created by wayne on 1/27/16.
- */
+///////////////////////////////////////////////////////////////////////////////
+//                   ALL STUDENTS COMPLETE THESE SECTIONS
+// Main Class File:  WHATSAPP
+// File:             BroadcastList.java
+// Semester:         367 Spring 2016
+//
+// Author:           Wayne Eternicka  eternicka@wisc.edu
+// CS Login:         eternicka
+// Lecturer's Name:  Deb Deppeler
+// Lab Section:      N/A
+//
+//////////////////////////////////////////////////////////////////////////////
 
 import java.util.List;
 
@@ -28,7 +37,8 @@ public class BroadcastList
      * fails
      *
      */
-    public BroadcastList(String nickname, List<String> members) throws WhatsAppRuntimeException
+    public BroadcastList(String nickname, List<String> members)
+            throws WhatsAppRuntimeException
     {
         //TODO
 

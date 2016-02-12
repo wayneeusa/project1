@@ -1,6 +1,15 @@
-/**
- * Created by wayne on 1/27/16.
- */
+///////////////////////////////////////////////////////////////////////////////
+//                   ALL STUDENTS COMPLETE THESE SECTIONS
+// Main Class File:  WHATSAPP
+// File:             User.java
+// Semester:         367 Spring 2016
+//
+// Author:           Wayne Eternicka  eternicka@wisc.edu
+// CS Login:         eternicka
+// Lecturer's Name:  Deb Deppeler
+// Lab Section:      N/A
+//
+//////////////////////////////////////////////////////////////////////////////
 
 import java.util.Iterator;
 import java.util.List;
@@ -210,7 +219,7 @@ public class User
      */
     public void removeBroadcastList(String broadcastNickname) throws WhatsAppException
     {
-        //TODO  want to ask TA about this exp .remove(thisList)
+        //TODO  FINISHED  CHECK
 
         if(!isBroadcastList(broadcastNickname)){
             throw new WhatsAppException(Config.BCAST_LIST_DOES_NOT_EXIST);
@@ -240,7 +249,7 @@ public class User
      */
     public boolean isFriend(String nickname)
     {
-        //TODO   -d
+        //TODO   FINISHED
 
         Iterator<User> friendsIterator = this.friends.iterator();
 
@@ -264,7 +273,7 @@ public class User
      * @return true if nickname is a broadcast list of this user object
      */
     public boolean isBroadcastList(String nickname) {
-        //TODO  -d
+        //TODO  FINISHED
 
 
         Iterator<BroadcastList> blistIterator = this.broadcastLists.iterator();
@@ -289,7 +298,7 @@ public class User
      */
     public boolean isExistingNickname(String nickname)
     {
-        //TODO  -d
+        //TODO  FINISHED
 
         if((isFriend(nickname) || (isBroadcastList(nickname)))){
         return true;
@@ -308,7 +317,7 @@ public class User
      * broadcastNickname
      */
     public boolean isMemberOfBroadcastList(String nickname, String broadcastNickname) {
-        //TODO  working on this will it work?
+        //TODO  FINISHED
 
         BroadcastList blist = Helper.getBroadcastListFromNickname(Config.getInstance().getCurrentUser().
                 getBroadcastLists(), broadcastNickname);
@@ -337,7 +346,7 @@ public class User
      */
     public void addFriend(String nickname) throws WhatsAppException
     {
-        //TODO   working on this, might possibly work?
+        //TODO   FINISHED
 
 
 

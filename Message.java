@@ -1,6 +1,15 @@
-/**
- * Created by wayne on 1/27/16.
- */
+///////////////////////////////////////////////////////////////////////////////
+//                   ALL STUDENTS COMPLETE THESE SECTIONS
+// Main Class File:  WHATSAPP
+// File:             Message.java
+// Semester:         367 Spring 2016
+//
+// Author:           Wayne Eternicka  eternicka@wisc.edu
+// CS Login:         eternicka
+// Lecturer's Name:  Deb Deppeler
+// Lab Section:      N/A
+//
+//////////////////////////////////////////////////////////////////////////////
 
 import java.util.Date;
 
@@ -26,7 +35,7 @@ import java.util.Date;
 public class Message
 {
 
-    //TODO: add class fields here  -from constructor params
+    //TODO: FINISHED
     String fromNickname;
     String toNickname;
     String broadcastNickname;
@@ -59,7 +68,7 @@ public class Message
     public Message(String fromNickname, String toNickname, String broadcastNickname,
                    Date sentTime, String message, boolean read) throws WhatsAppRuntimeException
     {
-        //TODO  --done, should be right
+        //TODO  FINISHED
 
         this.fromNickname = fromNickname;
         this.toNickname = toNickname;
@@ -77,7 +86,7 @@ public class Message
      */
     public String getFromNickname()
     {
-        //TODO   -d
+        //TODO   FINISHED
         return fromNickname;
     }
 
@@ -88,7 +97,7 @@ public class Message
      */
     public void setFromNickname(String fromNickname)
     {
-        //TODO  -d
+        //TODO  FINISHED
         this.fromNickname = fromNickname;
     }
 
@@ -99,7 +108,7 @@ public class Message
      */
     public String getToNickname()
     {
-        //TODO -d
+        //TODO FINISHED
         return toNickname;
     }
 
@@ -110,7 +119,7 @@ public class Message
      */
     public void setToNickname(String toNickname)
     {
-        //TODO   -d
+        //TODO   FINISHED
         this.toNickname = toNickname;
     }
 
@@ -121,7 +130,7 @@ public class Message
      */
     public String getBroadcastNickname()
     {
-        //TODO  -d
+        //TODO  FINISHED
         return broadcastNickname;
     }
 
@@ -132,7 +141,7 @@ public class Message
      */
     public void setBroadcastNickname(String broadcastNickname)
     {
-        //TODO  -d
+        //TODO  FINISHED
         this.broadcastNickname = broadcastNickname;
     }
 
@@ -144,7 +153,7 @@ public class Message
      */
     public Date getSentTime()
     {
-        //TODO   -d
+        //TODO   FINISHED
         return this.sentTime;
     }
 
@@ -156,7 +165,7 @@ public class Message
      */
     public void setSentTime(Date sentTime)
     {
-        //TODO   -d
+        //TODO   FINISHED
         this.sentTime = sentTime;
     }
 
@@ -167,7 +176,7 @@ public class Message
      */
     public String getMessage()
     {
-        //TODO  -d
+        //TODO  FINISHED
         return message;
     }
 
@@ -178,7 +187,7 @@ public class Message
      */
     public void setMessage(String message)
     {
-        //TODO    -d
+        //TODO    FINISHED
         this.message = message;
     }
 
@@ -190,7 +199,7 @@ public class Message
      */
     public boolean isRead()
     {
-        //TODO  -d
+        //TODO  FINISHED
         return read;
     }
 
@@ -202,7 +211,7 @@ public class Message
      */
     public void setRead(boolean read)
     {
-        //TODO  -d
+        //TODO  FINISHED
         this.read = read;
     }
 

@@ -1,6 +1,15 @@
-/**
- * Created by wayne on 1/27/16.
- */
+///////////////////////////////////////////////////////////////////////////////
+//                   ALL STUDENTS COMPLETE THESE SECTIONS
+// Main Class File:  WHATSAPP
+// File:             CommandProcessor.java
+// Semester:         367 Spring 2016
+//
+// Author:           Wayne Eternicka  eternicka@wisc.edu
+// CS Login:         eternicka
+// Lecturer's Name:  Deb Deppeler
+// Lab Section:      N/A
+//
+//////////////////////////////////////////////////////////////////////////////
 
 import java.util.Date;
 import java.util.Iterator;
@@ -138,7 +147,7 @@ public class CommandProcessor
      * messages.
      */
     public static void readMessage(String nickname, boolean enforceUnread) {
-        //TODO  -d prob right    handled "No messages to Display"
+        //TODO  FINISHED
 
         //check if nickname null - if so, print everyone's messages
         // to do this, iterate through every user?
@@ -283,7 +292,7 @@ public class CommandProcessor
      */
     public static void search(String word, boolean searchByFirstName)
     {
-        //TODO  should be done, Used contains as specified
+        //TODO  FINISHED
 
         String word2 = word.toLowerCase();
         int count = 0;
@@ -341,7 +350,7 @@ public class CommandProcessor
      */
     public static void addFriend(String nickname) throws WhatsAppException
     {
-        //TODO  -d
+        //TODO  FINISHED
         CONFIG.getCurrentUser().addFriend(nickname);
 
     }
@@ -356,7 +365,7 @@ public class CommandProcessor
      * method of the User class
      */
     public static void removeFriend(String nickname) throws WhatsAppException
-    //TODO  method in User class as stated
+    //TODO  FINISHED
     {
         CONFIG.getCurrentUser().removeFriend(nickname);
         CONFIG.getConsoleOutput().printf(Config.SUCCESSFULLY_REMOVED);
@@ -415,7 +424,7 @@ public class CommandProcessor
      */
     public static void removeFriendFromBcast(String friendNickname,
                                              String bcastNickname) throws WhatsAppException {
-        //TODO  throw exception here?
+        //TODO  FINISHED
         boolean friendWasRemoved = false;
 
         if (!CONFIG.getCurrentUser().isFriend(friendNickname)) {
